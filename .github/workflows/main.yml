@@ -35,14 +35,14 @@ jobs:
 
       - name: Create S3 bucket
         run: |
-          aws s3api create-bucket --bucket weather11 --region us-east-1
+          aws s3api create-bucket --bucket weather3 --region us-east-1
         continue-on-error: true
 
       - name: Copy artifact to S3 bucket
-        run: aws s3 cp ./target/data-0.0.1-SNAPSHOT.jar s3://weather11/
+        run: aws s3 cp ./target/data-0.0.1-SNAPSHOT.jar s3://weather3/
 
       - name: Copy CloudFormation template to S3 bucket
-        run: aws s3 cp ./cloudformationtemplate.yml s3://weather11/
+        run: aws s3 cp ./cloudformationtemplate.yml s3://weather3/
 
   deploy:
     needs: build
@@ -63,7 +63,7 @@ jobs:
         uses: aws-actions/aws-cloudformation-github-deploy@v1
         with:
           name: delta-weather-API-NewProject
-          template: https://weather11.s3.amazonaws.com/cloudformationtemplate.yml
+          template: https://weather3.s3.amazonaws.com/cloudformationtemplate.yml
           no-fail-on-empty-changeset: "1"
           capabilities: CAPABILITY_IAM
           no-execute-changeset: "0"
